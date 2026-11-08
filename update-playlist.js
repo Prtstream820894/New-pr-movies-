@@ -6,10 +6,10 @@ const fs = require('fs');
 const FIREBASE_DB_URL = "https://ipl2020-46d2f.firebaseio.com/Prmovies.json";
 
 // Sirf ek hi link/path yahan dalein jise aapko scrape karna hai
-const TARGET_PATH = "genre/fantasy/"; 
+const TARGET_PATH = "release-year/2026/"; 
 
 // Yahan aap apna group name rakh sakte hain jo M3U playlist mein show hoga
-const GROUP_NAME = "✨ Fantasy movies ✨"; 
+const GROUP_NAME = "✨New Movies"; 
 
 const USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
@@ -87,7 +87,7 @@ async function generatePlaylist() {
         
         let emptyPageStreak = 0;
 
-        for (let p = 1; p <= 10; p++) { 
+        for (let p = 1; p <= 3; p++) { 
             let targetPageUrl = p === 1 
                 ? `https://bold-darkness-d959.poonamchouhan076.workers.dev/?site=${catBaseUrl}`
                 : `https://bold-darkness-d959.poonamchouhan076.workers.dev/?site=${catBaseUrl}page/${p}/`;
