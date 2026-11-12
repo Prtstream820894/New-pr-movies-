@@ -1,32 +1,42 @@
+
 name: Update IPTV Playlist
 
 on:
   schedule:
-    - cron: '0 */2 * * *' # Ab har 2 ghante mein automatically chalega
-  workflow_dispatch: # Isse aap manually bhi GitHub button se run kar sakte ho
+    - cron: '17 */2 * * *'
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: playlist-update
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-    - name: Install Dependencies
-      run: npm install node-fetch@2
+      - name: Install Dependencies
+        run: npm install --no-save node-fetch@2
 
-    - name: Run Script
-      run: node update-playlist.js
+      - name: Run Playlist Generator
+        run: node update-playlist.js
 
-    - name: Commit and Push Changes
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        commit_message: "Auto-update IPTV playlist.m3u"
-        file_pattern: playlist.m3u
-        push_options: '--force'
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update IPTV playlist"
+          file_pattern: playlist.m3u
